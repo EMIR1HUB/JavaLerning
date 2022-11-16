@@ -1,7 +1,12 @@
+## Классы. ООП
+
++ [Generics (Обобщения)](Java/Class_OOP/Generics.md)
++ + [Обобщенный интерфейс](Java/Class_OOP/Generics.md#outinterface)
+
 ## Модульное тестирование
 
-+ [Junit](Test/Junit.md)
++ [Junit](Framework/Test/Junit.md)
 
 ## Hibernate
 
-+ [Аннотации](Hibernate/Hibernate.md)
++ [Аннотации](Framework/Hibernate/Hibernate.md)
