@@ -143,5 +143,117 @@ class Account<T> implements Accountable<T>{
     public void setSum(int sum) { this.sum = sum; }
 }
 ```
+___
+<br>
 
+<a name="outmethods"></a>
 
+## Обобщенные методы
+
+Кроме обобщенных типов можно также создавать обобщенные методы, которые точно также будут использовать универсальные параметры:
+
+```Java
+public class Program{
+      
+    public static void main(String[] args) {
+          
+        Printer printer = new Printer();
+        String[] people = {"Tom", "Alice", "Sam", "Kate", "Bob", "Helen"};
+        Integer[] numbers = {23, 4, 5, 2, 13, 456, 4};
+        printer.<String>print(people);
+        printer.<Integer>print(numbers);
+    }
+}
+ 
+class Printer{
+     
+    public <T> void print(T[] items){
+        for(T item: items){
+            System.out.println(item);
+        }
+    }
+}
+```
+
+Особенностью обобщенного метода является использование универсального параметра в объявлении метода после всех модификаторов и перед типом возвращаемого значения.
+
+```public <T> void print(T[] items)```
+___
+
+<br>
+
+<a name="universalpar"></a>
+
+## Использование нескольких универсальных параметров
+
+Можем также задать сразу несколько универсальных параметров:
+
+```Java
+public class Program{
+      
+    public static void main(String[] args) {
+          
+        Account<String, Double> acc1 = new Account<String, Double>("354", 5000.87);
+        String id = acc1.getId();
+        Double sum = acc1.getSum();
+        System.out.printf("Id: %s  Sum: %f \n", id, sum);
+    }
+}
+class Account<T, S>{
+     
+    private T id;
+    private S sum;
+     
+    Account(T id, S sum){
+        this.id = id;
+        this.sum = sum;
+    }
+     
+    public T getId() { return id; }
+    public S getSum() { return sum; }
+    public void setSum(S sum) { this.sum = sum; }
+}
+```
+
+В данном случае тип `String` будет передаваться на место параметра **T**, а тип `Double` - на место параметра **S**.
+___
+
+<br>
+
+<a name="outconstruction"></a>
+
+## Обобщенные конструкторы
+
+Конструкторы также могут быть обобщенными. В этом случае перед конструктором также указываются в угловых скобках универсальные параметры:
+
+```Java
+public class Program{
+      
+    public static void main(String[] args) {
+          
+        Account acc1 = new Account("cid2373", 5000);
+        Account acc2 = new Account(53757, 4000);
+        System.out.println(acc1.getId());
+        System.out.println(acc2.getId());
+    }
+}
+ 
+class Account{
+     
+    private String id;
+    private int sum;
+     
+    <T>Account(T id, int sum){
+        this.id = id.toString();
+        this.sum = sum;
+    }
+     
+    public String getId() { return id; }
+    public int getSum() { return sum; }
+    public void setSum(int sum) { this.sum = sum; }
+}
+```
+
+В данном случае конструктор принимает параметр id, который представляет тип **T**. В конструкторе его значение превращается в строку и сохраняется в локальную переменную.
+
+[Вернуться назад](../../README.md)
