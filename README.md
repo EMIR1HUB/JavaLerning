@@ -17,6 +17,10 @@
 
 ## Коллеции
 + [Типы коллекций. Интерфейс Collection](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md)
++ [Класс ArrayList и интерфейс List](Java/Collection/ArrayList_ИнтерфейсList.md)
++ [Очереди и класс ArrayDeque](java/Collection/Очереди&classArrayDeque.md)
+___
+<br>
 
 ## Модульное тестирование
 
