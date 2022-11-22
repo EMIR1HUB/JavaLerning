@@ -148,7 +148,7 @@ interface Accountable{}
 class Transaction<T extends Person & Accountable>{}
 ```
 
-
+[Вернуться назад](../../README.md)
 
 
 
