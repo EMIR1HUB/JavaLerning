@@ -17,8 +17,11 @@
 
 ## Коллеции
 + [Типы коллекций. Интерфейс Collection](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md)
-+ [Класс ArrayList и интерфейс List](Java/Collection/ArrayList_ИнтерфейсList.md)
-+ [Очереди и класс ArrayDeque](java/Collection/Очереди&classArrayDeque.md)
++ [ArrayList. Интерфейс List](Java/Collection/ArrayList_ИнтерфейсList.md#list)
++ [ArrayDeque](Java/Collection/ArrayList_ИнтерфейсList.md#arrdeque)
++ + [Queue](Java/Collection/ArrayList_ИнтерфейсList.md#queue)
++ + [Deque](Java/Collection/ArrayList_ИнтерфейсList.md#deque)
++ [LinkedList](Java/Collection/LinkedList.md)
 ___
 <br>
 
