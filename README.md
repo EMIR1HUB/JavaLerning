@@ -21,7 +21,13 @@
 + [ArrayDeque](Java/Collection/ArrayList_ИнтерфейсList.md#arrdeque)
 + + [Queue](Java/Collection/ArrayList_ИнтерфейсList.md#queue)
 + + [Deque](Java/Collection/ArrayList_ИнтерфейсList.md#deque)
-+ [LinkedList](Java/Collection/LinkedList.md)
++ [LinkedList](Java/Collection/ArrayList_ИнтерфейсList.md#linkedlist)
++ [Set](Java/Collection/ArrayList_ИнтерфейсList.md#set)
++ + [HashSet](Java/Collection/ArrayList_ИнтерфейсList.md#hashset)
++ + [SortedSet](Java/Collection/ArrayList_ИнтерфейсList.md#sortedset)
++ + [NavigableSet](Java/Collection/ArrayList_ИнтерфейсList.md#navset)
++ + [LinkedHashSet](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashset)
++ + [TreeSet](Java/Collection/ArrayList_ИнтерфейсList.md#treeset)
 ___
 <br>
 
