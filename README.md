@@ -15,7 +15,7 @@
 + [Классы исключений](Java/Exception/ОператорThrows.md)
 + [Создание своих классов исключений](Java/Exception/СозданиевоихКлассовИсключений.md)
 
-## Коллеции
+## Коллекции
 + [Типы коллекций. Интерфейс Collection](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md)
 + [ArrayList. Интерфейс List](Java/Collection/ArrayList_ИнтерфейсList.md#list)
 + [ArrayDeque](Java/Collection/ArrayList_ИнтерфейсList.md#arrdeque)
@@ -30,9 +30,9 @@
 + [Map](Java/Collection/ArrayList_ИнтерфейсList.md#map)
 + + [HashMap](Java/Collection/ArrayList_ИнтерфейсList.md#hashmap)
 + + [LinkedHashMap](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashmap)
-+ + [SortedMap](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md#sortedmap)
-+ + [NavigableMap](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md#navigablemap)
-+ + [TreeMap](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md#treemap)
++ + [SortedMap](Java/Collection/ArrayList_ИнтерфейсList.md#sortedmap)
++ + [NavigableMap](Java/Collection/ArrayList_ИнтерфейсList.md#navigablemap)
++ + [TreeMap](Java/Collection/ArrayList_ИнтерфейсList.md#treemap)
 ___
 <br>
 
