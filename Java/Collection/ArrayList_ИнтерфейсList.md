@@ -11,6 +11,12 @@
 + + [NavigableSet](#navset)
 + + [LinkedHashSet](#linkedhashset)
 + + [TreeSet](#treeset)
++ [Map](#map)
++ + [HashMap](#hashmap)
++ + [LinkedHashMap](#linkedhashmap)
++ + [SortedMap](#sortedmap)
++ + [NavigableMap](#navigablemap)
++ + [TreeMap](#treemap)
 ___
 <br>
 
@@ -320,6 +326,251 @@ for (int i = 0; i < 5; i++) {
 [0, 1, 2, 4, 8]
 [2, 3, 9]
 ```
+___
+<br>
+
+<a name="map"></a>
+# Интерфейс Map | Словарь
+
+Интерфейс `Map<K, V>` представляет словарь, где каждый элемент представляет пару "ключ-значение". Все ключи уникальные в рамках объекта **Map**. Основные реализации: `Hashmap`, `LinkedHashMap`, `Hashtable`, `TreeMap`.
+
+> `Map` НЕ расширяет интерфейс `Collection`.
+
+<a name="mapmethods"></a>
+
+## Основные методы
+
++ `void clear()`: очищает коллекцию
+
++ `boolean containsKey(Object k)`: возвращает true, если коллекция содержит ключ k
+
++ `boolean containsValue(Object v)`: возвращает true, если коллекция содержит значение v
+
++ `Set<Map.Entry<K, V>> entrySet()`: возвращает набор элементов коллекции. Все элементы представляют объект **Map.Entry**
+
++ `boolean equals(Object obj)`: возвращает true, если коллекция идентична коллекции, передаваемой через параметр obj
+
++ `boolean isEmpty`: возвращает true, если коллекция пуста
+
++ `V get(Object k)`: возвращает значение объекта, ключ которого равен k. Если такого элемента не окажется, то возвращается значение null
+
++ `V getOrDefault(Object k, V defaultValue)`: возвращает значение объекта, ключ которого равен k. Если такого элемента не окажется, то возвращается значение defaultValue
+
++ `V put(K k, V v)`: помещает в коллекцию новый объект с ключом k и значением v. Если в коллекции уже есть объект с подобным ключом, то он перезаписывается. После добавления возвращает предыдущее значение для ключа k, если он уже был в коллекции. Если же ключа еще не было в коллекции, то возвращается значение null
+
++ `V putIfAbsent(K k, V v)`: помещает в коллекцию новый объект с ключом k и значением v, если в коллекции еще нет элемента с подобным ключом.
+
++ `Set<K> keySet()`: возвращает набор всех ключей отображения
+
++ `Collection<V> values()`: возвращает набор всех значений отображения
+
++ `void putAll(Map<? extends K, ? extends V> map)`: добавляет в коллекцию все объекты из отображения map
+
++ `V remove(Object k)`: удаляет объект с ключом k
+
++ `int size()`: возвращает количество элементов коллекции
+
+<br>
+
+Обобщенный интерфейс `Map.Entry<K, V>` представляет объект с ключом типа K и значением типа V и определяет следующие методы:
+
+```java
+boolean equals(Object obj) // возвращает true, если объект obj, представляющий интерфейс Map.Entry, идентичен текущему
+K getKey() // возвращает ключ объекта отображения
+V getValue() // возвращает значение объекта отображения
+V setValue(V v) // устанавливает для текущего объекта значение v
+int hashCode(): // возвращает хеш-код данного объекта
+```
+<br>
+
+<a name="hashmap"></a>
+# HashMap
+
+> Облегчает поиск значения, если известен ключ - уникальный итендификатор.
+
+## Создание словаря. Заполнение и получение значений
+
+```Java
+HashMap<Integer, String> hashMap = new HashMap<>();
+hashMap.put(1, "one"); // добавление элемента, если в коллекции уже есть элемент с подобным ключом, то он перезаписывается
+hashMap.put(2, "two");
+hashMap.put(3, "three");
+hashMap.get(1); // Получение значения по ключу или null, если значение отсутствует
+hashMap.get(2);
+hashMap.get(3);
+```
+
+## Перебор словаря и вывод содержимого на экран
+
+```java
+for (Map.Entry entry : hashMap.entrySet()) // entrySet() - возвращает множество элементов коллекции 
+{
+    System.out.print("key: " + entry.getKey()); // getKey() - получить ключ сущности
+    System.out.println("; value: " + entry.getValue()); // getKey() - получить значение сущности
+}
+```
+
+## Конвертация Map в List
+
+```Java
+// key list
+List<Integer> keyList = new ArrayList<>(map.keySet());
+// value list
+List<String> valueList = new ArrayList<>(map.values());
+// key-value list
+List<Map.Entry<Integer, String>> entryList = new ArrayList<>(map.entrySet());
+```
+
+## Счетчик ключей Map
+
+```Java
+//map<String, Int> 
+while ((line = bufferedReader.readLine()) != null) 
+{
+    String[] words = line.split("\\W"); {
+        for (String word : words) {
+            if (word.equals("")) {
+                continue;
+            }
+            if (!map.containsKey(word)) {
+                map.put(word, 1);
+            } else {
+                map.put(word, map.get(word) + 1);
+            }
+        }
+    }
+}
+```
+## [Основные методы](#mapmethods)
+
+<br>
+
+<a name="linkedhashmap"></a>
+# LinkedHashMap
+
+`LinkedHashMap` - отображение с запоминанием порядка, в котором добавлялись элементы, разрешает перебор в порядке вставки.
+
+```Java
+// ====LinkedHashMap====
+LinkedHashMap <Integer, String> linkedHashMap = new LinkedHashMap<>();
+linkedHashMap.put(1, "one");
+linkedHashMap.put(3, "three");
+linkedHashMap.put(4, "four");
+linkedHashMap.put(2, "two");
+
+// ====HashMap====
+HashMap<Integer, String> hashMap = new HashMap<>();
+hashMap.put(1, "one");
+hashMap.put(3, "three");
+hashMap.put(4, "four");
+hashMap.put(2, "two");
+
+
+// Результат
+// ====LinkedHashMap====
+key: 1; value = one
+key: 3; value = three
+key: 4; value = four
+key: 2; value = two
+
+// ====HashMap====
+key: 1; value = one
+key: 2; value = two
+key: 3; value = three
+key: 4; value = four
+```
+
+<br>
+
+<a name="sortedmap"></a>
+# SortedMap
+
+Интерфейс `SortedMap` расширяет `Map` и создает отображение, в котором все элементы отсортированы в порядке возрастания их ключей.
+
+## Методы
+```Java
+K firstKey() // возвращает ключ первого элемента отображения
+K lastKey() // возвращает ключ последнего элемента отображения
+SortedMap<K, V> headMap(K end) // возвращает отображение SortedMap, которые содержит все элементы оригинального SortedMap вплоть до элемента с ключом end
+SortedMap<K, V> tailMap(K start) // возвращает отображение SortedMap, которые содержит все элементы оригинального SortedMap, начиная с элемента с ключом start
+SortedMap<K, V> subMap(K start, K end) // возвращает отображение SortedMap, которые содержит все элементы оригинального SortedMap вплоть от элемента с ключом start до элемента с ключом end
+```
+<br>
+
+<a name="navigablemap"></a>
+# NavigableMap
+
+Интерфейс `NavigableMap` расширяет интерфейс `SortedMap` и обеспечивает возможность получения элементов отображения относительно других элементов. 
+
+## Основные методы:
+
++ `Map.Entry<K, V> ceilingEntry(K obj)`: возвращает элемент с наименьшим ключом k, который больше или равен ключу obj **(k >=obj)**. Если такого ключа нет, то возвращается null.
+
++ `Map.Entry<K, V> floorEntry(K obj)`: возвращает элемент с наибольшим ключом k, который меньше или равен ключу obj **(k <=obj)**. Если такого ключа нет, то возвращается null.
+
++ `Map.Entry<K, V> higherEntry()`: возвращает элемент с наименьшим ключом k, который больше ключа obj **(k >obj)**. Если такого ключа нет, то возвращается null.
+
++ `Map.Entry<K, V> lowerEntry()`: возвращает элемент с наибольшим ключом k, который меньше ключа obj **(k < obj)**. Если такого ключа нет, то возвращается null.
+
++ `Map.Entry<K, V> firstEntry()` | `lastEntry()`: возвращает (первый | последний) элемент отображения
+
++ `Map.Entry<K, V> pollFirstEntry()` | `pollLastEntry()`: возвращает и одновременно удаляет (первый | последний) элемент из отображения
+
++ `K ceilingKey(K obj)`: возвращает наименьший ключ k, который больше или равен ключу obj **(k >=obj)**. Если такого ключа нет, то возвращается null.
+
++ `K floorKey(K obj)`: возвращает наибольший ключ k, который меньше или равен ключу obj **(k <=obj)**. Если такого ключа нет, то возвращается null.
+
++ `K lowerKey(K obj)`: возвращает наибольший ключ k, который меньше ключа obj **(k < obj)**. Если такого ключа нет, то возвращается null.
+
++ `K higherKey(K obj)`: возвращает наименьший ключ k, который больше ключа obj **(k > obj)**. Если такого ключа нет, то возвращается null.
+
++ `NavigableSet<K> descendingKeySet()`: возвращает объект NavigableSet, который содержит все ключи отображения в обратном порядке
+
++ `NavigableMap<K, V> descendingMap()`: возвращает отображение NavigableMap, которое содержит все элементы в обратном порядке
+
++ `NavigableSet<K> navigableKeySet()`: возвращает объект NavigableSet, который содержит все ключи отображения
+
+<br>
+
+<a name="treemap"></a>
+# TreeMap
+
+`TreeMap<K, V>` представляет отображение в виде дерева. В отличие от коллекции `HashMap` в `TreeMap` все объекты автоматически сортируются по возрастанию их ключей.
+
+## Сортировка ключей существующей Map
+
+```Java
+LinkedHashMap<String, Integer> linkedHashMap = new LinkedHashMap<>(); // неотсортированная мапа
+linkedHashMap.put("xxx", 5);
+linkedHashMap.put("a", 3);
+linkedHashMap.put("ccc", 1);
+linkedHashMap.put("b", 2);
+
+for (Map.Entry entry : linkedHashMap.entrySet()) {
+    System.out.println("key: " + entry.getKey() + "; value: " + entry.getValue());
+}
+
+//Результат
+key: xxx; value: 5
+key: a; value: 3
+key: ccc; value: 1
+key: b; value: 2
+
+
+TreeMap<String, Integer> treeMap = new TreeMap<>(linkedHashMap); // Передача неотсортированной мапы для сортировки
+for (Map.Entry entry : treeMap.entrySet()) {
+    System.out.println("key: " + entry.getKey() + "; value: " + entry.getValue());
+}
+
+//Результат
+key: a; value: 3
+key: b; value: 2
+key: ccc; value: 1
+key: xxx; value: 5
+```
+
+
+
 
 
 [Вернуться назад](../../README.md)

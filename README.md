@@ -27,7 +27,12 @@
 + + [SortedSet](Java/Collection/ArrayList_ИнтерфейсList.md#sortedset)
 + + [NavigableSet](Java/Collection/ArrayList_ИнтерфейсList.md#navset)
 + + [LinkedHashSet](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashset)
-+ + [TreeSet](Java/Collection/ArrayList_ИнтерфейсList.md#treeset)
++ [Map](Java/Collection/ArrayList_ИнтерфейсList.md#map)
++ + [HashMap](Java/Collection/ArrayList_ИнтерфейсList.md#hashmap)
++ + [LinkedHashMap](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashmap)
++ + [SortedMap](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md#sortedmap)
++ + [NavigableMap](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md#navigablemap)
++ + [TreeMap](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md#treemap)
 ___
 <br>
 
