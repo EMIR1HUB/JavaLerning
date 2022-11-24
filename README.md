@@ -33,6 +33,11 @@
 + + [SortedMap](Java/Collection/ArrayList_ИнтерфейсList.md#sortedmap)
 + + [NavigableMap](Java/Collection/ArrayList_ИнтерфейсList.md#navigablemap)
 + + [TreeMap](Java/Collection/ArrayList_ИнтерфейсList.md#treemap)
+
+<br>
+
++ [Comparable и Comparator](Java/Collection/ComparableComparator.md)
++ [Iterator](Java/Collection/Iterator.md)
 ___
 <br>
 
