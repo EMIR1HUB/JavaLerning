@@ -1,0 +1,216 @@
+
+<a name = "appcontext"></a>
+# ApplicationContext 
+
+`ApplicationContext` - это главный интерфейс в Spring-приложении, который предоставляет информацию о конфигурации приложения.
+
+> **Контекст** - набор бинов (объектов). Обращаясь к контексту можно получить нужный бин (объект) по его имени, типу или чему-то еще.
+
+У `ApplicationContext` есть большое количество реализаций, они отличаются друг от друга тем, каким способом задаются мета-данные и где хранится эта конфигурация. 
+
++ `ClassPathXmlApplicationContext` — метаданные конфигурируются XML-файлом(-ами) и они лежат в **classpath**, т. е. в ресурсах модуля;
++ `FileSystemXmlApplicationContext` — метаданные тоже конфигурируются XML-файлом(-ами), но они находятся где-то в файловой системе, например, `/etc/yourapp/spring-context.xml`;
++ `AnnotationConfigApplicationContext` — метаданные конфигурируются с помощью аннотаций 
+
+
+Современным способом конфигурирования считаются аннотации `AnnotationConfigApplicationContext`. 
+
+```Java
+@Configuration
+@ComponentScan
+public class Main {
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(Main.class);
+    }
+}
+ ```   
+
+## Способы конфигурации приложения
+
+Указать спрингу, какие именно объекты нужны для работы можно тремя способами, которые можно комбинировать между собой:
+
+1. При помощи **XML файла конфикурации** - самый низкоприоритетный способ, но многие приложения до сих пор его используют
+2. **Java аннотаций и немного XML** - современный способ, наиболее приоритетный
+3. Вся конфигурация на **Java коде** (создание объектов, используя java-код) - современный способ
+
+## Основные зависимости (pop.xml)
+
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>...</version>
+</dependency>
+
+spring-core
+spring-beans
+spring-context
+```
+
+___
+
+<br>
+
+<a name = "iocdi"></a>
+
+# IoC / DI
+
+`IoC (Inversion of Control)` - Инверсия управления - архитектурный подход, при котором сущность не сама создает свои зависимости, а зависимости подаются извне.
+
+Может реализовываться как механизм передачи процесса выполнения кода/программы фреймворку. При использовании библиотеки вы сами прописываете в своем коде какой метод какого объекта вызвать, а в случае с фреймворками — чаще всего уже фреймворк будет вызывать в нужный ему момент тот код, который вы написали. То есть , тут уже не вы управляете процессом выполнения кода/программы, а фреймворк это делает за вас. Вы передали ему управление (инверсия управления).
+
+`(Dependency Inversion)` - инверсия зависимостей - попытки не делать жестких связей между вашими модулями/классами, где один класс напрямую завязан на другой;
+
+`DI (Dependency Injection)` - Внедрение зависимости — процесс предоставления внешней зависимости программному компоненту. Вместо ручного создания объектов, Спринг создает бины и передает их в методы по конфигурации.
+
+В технологии внедрения зависимостей компоненты не создают и не поддерживют жизненный цикл других компонентов компонентов, от которых он зависят, а полагаются в этом на отдельный объект (контейнер), который создаст все нужные компоненты и внедрит их в другие пкомпоненты, которые в них нуждаются.
+___
+
+<br>
+
+# Конфигурация Spring приложения. XML
+
+Создание XML конфигурации Spring в файле **applicationContext.xml**, файл должен лежать в папке **resources**
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+    <!-- <bean ...>...</bean> -->
+</bean>
+```
+___
+
+
+## Способы внедрения зависимости
+
+Внедряемый бин
+
+```Java
+<bean id="testBean"     // уникальный индегфикатор бина
+        class="com.suleimanov.core.TestBean">
+</bean>
+```
+
+### Через конструктор (передача аргумента в качестве строки) 
+
+```Java
+public TestBean(String name){ this.name = name; }
+
+// applicationContext.xml
+<bean id="testBean" class="com.suleimanov.core.TestBean">
+    <constructor-arg value="Niko"/>
+</bean>
+```
+
+### Через конструктор (передача аргумента в качестве объекта)
+
+```xml
+public MusicPlayer(RockMusic music) { this.music = music; }
+
+<!-- applicationContext.xml -->
+<bean id="musicBean" class="com.suleimanov.core.RockMusic"></bean>
+
+<bean id="musicPlayer" class="com.suleimanov.core.MusicPlayer">
+    <constructor-arg ref="musicBean"/> 
+</bean>
+```
+
+### Через setter 
+
+Внедрение ссылки на объект
+
+```xml
+public void setMusic(Music music) { this.music = music; }
+
+<!-- applicationContext.xml -->
+<bean id="musicBean" class="com.suleimanov.core.ClassicalMusic"></bean>
+
+<bean id="musicPlayer" class="com.suleimanov.core.MusicPlayer">
+    <property name="music" ref="musicBean"/>
+    <!-- name - имя сеттера с маленькой буквы -->
+</bean>
+
+```
+
+Внедрение простых значений
+
+```xml
+public void setName(String name) { this.name = name; }
+public void setVolume(String volume) { this.volume = volume; }
+
+<bean id="musicPlayer" class="com.suleimanov.core.MusicPlayer">
+    <property name="name" value="Some name"/>
+    <property name="volume" value="50"/>
+</bean>
+```
+
+### Внедрение значений из файла
+
+> расширение файла **.properties** в каталоге **resources**
+
+```xml
+<!-- beans.properties -->
+musicPlayer.name = Some name
+musicPlayer.volume = 70
+
+<!-- applicationContext.xml -->
+<context:property-placeholder location="classpath:beans.properties"/>
+<!--classpath: - папка resources  -->
+
+<bean id="musicPlayer" class="com.suleimanov.core.MusicPlayer">
+    <property name="name" value="${musicPlayer.name}"/>
+    <property name="volume" value="${musicPlayer.volume}"/>
+</bean>
+
+```
+___
+
+## Обращение к конфигурации
+
+```Java
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+TestBean testBean = context.getBean("testBean", TestBean.class);
+
+System.out.println(testBean.getName());
+```
+> context.getBean - получение бина, в качетсве первого бина указывается id бина, в качетсве второго тот класс бин которого хотим получить
+___
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

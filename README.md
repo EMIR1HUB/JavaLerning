@@ -41,6 +41,12 @@
 ___
 <br>
 
+## Spring Core
++ [ApplicationContext](Framework/Spring/SpringCore.md#appcontext)
++ [IoC / DI](Framework/Spring/SpringCore.md#iocdi)
+
+<br>
+
 ## Модульное тестирование
 
 + [Junit](Framework/Test/Junit.md)
