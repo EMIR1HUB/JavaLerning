@@ -190,8 +190,66 @@ ___
 
 
 
+# Bean Scopes
 
+Spring определяет 6 типов областей видимости:
 
++ singleton
++ prototype
++ request
++ session
++ application
++ websocket
+
+**request**, **session**, **application** и **websocket**, доступны только в веб-приложении.
+<br>
+
+## Singleton Scope
+
+bean-компонент с областью `singleton`, контейнер создает один экземпляр этого бина. Все запросы для этого имени компонента будут возвращать один и тот же объект, который кэшируется. Любые изменения объекта будут отражены во всех ссылках на компонент. 
+> Эта область является значением по умолчанию, если не указана другая область.
+
+```xml
+<bean id="musicPlayer" class="com.suleimanov.core.ClassicalMusic"
+        scope="singleton">  <!-- singleton указывать не обязательно --->
+</bean>
+```
+
+```Java
+MusicPlayer musicPlayer1 = context.getBean("musicPlayer", MusicPlayer.class);
+MusicPlayer musicPlayer2 = context.getBean("musicPlayer", MusicPlayer.class);
+
+System.out.println(musicPlayer1);   // com.suleimanov.core.MusicPlayer@795cd85e
+System.out.println(musicPlayer2);   // com.suleimanov.core.MusicPlayer@795cd85e
+
+System.out.println(musicPlayer2.getVolume());   // 70
+musicPlayer1.setVolume(10);
+System.out.println(musicPlayer2.getVolume());   // 10
+```
+
+<br>
+
+## Prototype Scope
+
+Бин с областью действия `prototype`  будет возвращать другой экземпляр каждый раз, когда запрашивается из контейнера.
+```xml
+scope="singleton"
+```
+
+```Java
+MusicPlayer musicPlayer1 = context.getBean("musicPlayer", MusicPlayer.class);
+MusicPlayer musicPlayer2 = context.getBean("musicPlayer", MusicPlayer.class);
+
+System.out.println(musicPlayer1);   // com.suleimanov.core.MusicPlayer@402bba4f
+System.out.println(musicPlayer2);   // com.suleimanov.core.MusicPlayer@795cd85e
+
+System.out.println(musicPlayer2.getVolume());   // 70
+musicPlayer1.setVolume(10);
+System.out.println(musicPlayer2.getVolume());   // 70
+```
+___
+
+<br>
 
 
 
