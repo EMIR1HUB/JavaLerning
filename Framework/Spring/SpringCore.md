@@ -252,10 +252,106 @@ ___
 <br>
 
 
+# Методы бинов (init, destroy, factory)
 
 
+Жизненный цикл любого бина (объекта) означает: как и когда он появляется, как он себя ведет во время жизни и как и когда он исчезает.
+
+Жизненным циклом управляет спринг-контейнер. После запуска приложения запускается именно он. После этого контейнер по необходимости и в соответствии с запросами создает экземпляры бинов и внедряет необходимые зависимости. Затем бины, связанные с контейнером, уничтожаются когда контейнер завершает свою работу. Поэтому, если мы хотим выполнить какой-то код во время инстанцирования бина или сразу после завершения работы контейнера, то вынесим его в специальные `init()` и `destroy()` методы.
+
+![life](img/life.png)
+
+<br>
+
+## init-method | destroy-method
+
+`init` - метод, который запускается в ходе инициализации бина. Можно использовать для настройки ресурсов, таких как БД/сокет/файл и т.д.
+
+`destroy` - метод, который запускается в ходе угичтожения бина (при завершения приложения). Можно использовать для очищения ресурсов, закрытия потока ввода-вывода, закрытие доступа к БД.
 
 
+```Java
+public class ClassicalMusic implements Music {
+    
+    @Override
+    public String getSong() { return "Classical Music"; }
+
+    private void doInit() { System.out.println("Doing my initialization"); }
+    private void doDestroy() { System.out.println("Doing my destruction"); }
+}
+```
+
+**applicationContext.xml**
+
+```xml
+<bean id="musicBean"
+        class="com.suleimanov.core.ClassicalMusic"
+        init-method="doInit"
+        destroy-method="doDestroy"
+</bean>
+```
+
+```Java
+ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+ClassicalMusic classicalMusic = context.getBean("musicBean", ClassicalMusic.class);
+System.out.println(classicalMusic.getSong());
+
+context.close();
+
+// Doing my initialization
+// Classical Music
+// Doing my destruction
+```
+
+> Тонокости:
+> + может быть любой модификатор доступа (public, protected, private)
+> + нельзя получить тип возращаемого, поэтому обычно void
+> + методы не должны получать на вход какие-либо аргументы 
+> + spring не вызывает `destroy` метод для бинов со **scope "prototype"**
+
+<br>
+
+## factory-method
+
+Фабричный метод - это паттерн программирования. Этот паттерн предлагает создавать объект не напрямую, используя оператор **new**, а через вызов особового **фабричного метода**. Объекты по-прежнему будут создаваться при помощи оператора **new**, но он вызывается из фабричного метода.
+
+```Java
+public class ClassicalMusic implements Music {
+
+    private ClassicalMusic() {}
+
+    public static ClassicalMusic getClassicalMusic(){   // обязательно static
+        return new ClassicalMusic();
+    }
+
+    @Override
+    public String getSong() { return "Classical Music"; }
+}
+
+```
+
+**applicationContext.xml**
+```xml
+<bean id="musicBean"
+        class="com.suleimanov.core.ClassicalMusic"
+        factory-method="getClassicalMusic">
+</bean>
+```
+
+```Java
+ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+ClassicalMusic classicalMusic = context.getBean("musicBean", ClassicalMusic.class);
+System.out.println(classicalMusic.getSong());
+
+context.close();
+
+// Classical Music
+```
+___
+
+<br>
 
 
 
