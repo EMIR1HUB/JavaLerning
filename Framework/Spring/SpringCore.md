@@ -354,6 +354,52 @@ ___
 <br>
 
 
+# Конфигурация Spring приложения. XML + Аннотации
+
+# Аннотации
+
+в xml файле
+```xml
+<context:component-scan base-package="название пакета с классами для бинов" />
+```
+
+Аннотации - специальный тип комментариев, с помощью которых можно
++ передавать инструкции для Java-компилятора (Например, `@Override`)
++ передавать инструкции для анализаторов исхдного кода
++ передавать метаданные, которые могут быть использованы либо Java приложением (с помощью рефлексии), либо другими приложениями или фреймворками (Например, Spring)
+
+> Преимущества аннотаций: короче и удобнее, чем XML конфигурация, код становится более читабельным.
+
+`@Component` - пометка на создание бина из класса
+
++ Можно указать **id** для бина или не указывать (тогда название будет название класса с первой маленькой буквы
+
+
+```Java
+@Component
+public class RockMusic implements Music{
+    @Override
+    public String getSong() { return "Rock Music"; }
+}
+
+
+public class TestSpring {
+    public static void main(String[] args) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        Music music1 = context.getBean("rockMusic", Music.class);   // получаем бин с помощью анотации @Component
+        System.out.println(music1.getSong());
+        
+        context.close();
+    }
+}
+```
+___
+
+<br>
+
+
+
 
 
 
