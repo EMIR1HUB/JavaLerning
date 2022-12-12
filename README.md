@@ -42,8 +42,18 @@ ___
 <br>
 
 ## Spring Core
-+ [ApplicationContext](Framework/Spring/SpringCore.md#appcontext)
-+ [IoC / DI](Framework/Spring/SpringCore.md#iocdi)
+IoC, DI, Beans, Configuration
++ [ApplicationContext](Framework/Spring/SpringCore/SpringCore.md#appcontext)
++ [IoC / DI](Framework/Spring/SpringCore/SpringCore.md#iocdi)
++ Конфигурация Spring приложения. XML
++ + [Способы внедрения зависимости](Framework/Spring/SpringCore/Configura_XML.md#dependency)
++ + [Bean Scopes](Framework/Spring/SpringCore/Configura_XML.md#beans)
++ + [Методы бинов (init, destroy, factory)](Framework/Spring/SpringCore/Configura_XML.md#indemethod)
++ Конфигурация Spring приложения. XML + Аннотации
++ + [Аннотации](Framework/Spring/SpringCore/Config_annotation+XML.md#annotation)
++ + [Внедрение зависимостей с помощью аннотаций](Framework/Spring/SpringCore/Config_annotation+XML.md#implanat)
++ Конфигурация Spring приложения. Аннотации + Java код
++ + [Java-код](Framework/Spring/SpringCore/Config_annotation+JavaCode.md)
 
 <br>
 
