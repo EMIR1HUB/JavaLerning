@@ -21,8 +21,8 @@ public class SpringConfig{
 | **XML** | **Аннотации** |
 | --- | --- |
 | `<context:component-scan base-package="директория с компонентами"/>` | @ComponentScan("директория с компонентами") |
-| <bean/> | @Bean |
-| <context:property-placeholder location="classpath:файл.properties"/> | @PropertySource("classpath:файл.properties")|
+| `<bean/>` | @Bean |
+| `<context:property-placeholder location="classpath:файл.properties"/>` | @PropertySource("classpath:файл.properties")|
 
 <br>
 

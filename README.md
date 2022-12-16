@@ -54,7 +54,12 @@ IoC, DI, Beans, Configuration
 + + [Внедрение зависимостей с помощью аннотаций](Framework/Spring/SpringCore/Config_annotation+XML.md#implanat)
 + Конфигурация Spring приложения. Аннотации + Java код
 + + [Java-код](Framework/Spring/SpringCore/Config_annotation+JavaCode.md)
+___
+<br>
 
+## Spring MVC
+
+___
 <br>
 
 ## Модульное тестирование
