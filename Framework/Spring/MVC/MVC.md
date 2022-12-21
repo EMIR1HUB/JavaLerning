@@ -1,5 +1,12 @@
 # Spring MVC
 
++ [DispatcherServlet](#ds)
++ [Controller](#controller)
++ [HTTP методы](#http)
++ [Обработка параметров GET запроса](#get)
++ [Model](#model)
++ [View](#view)
+
 Предполагает разработку web-приложений с использованием архитектуры **Model - View - Controller**.
 
 ## MVC | (Model - View - Controller)
@@ -26,6 +33,7 @@ thymeleaf-spring5
 ___
 <br>
 
+<a name="ds"></a>
 # DispatcherServlet
 
 Входная точка Spring MVC приложения. Находиться между `HTTP Reques` и `Controller`.
@@ -38,6 +46,7 @@ HTTP запрос от пользователя:
 ___
 <br>
 
+<a name="controller"></a>
 # Controller
 
 `@Controller`
@@ -81,6 +90,7 @@ public class PersonController {
 ```
 <br>
 
+<a name="http"></a>
 ## HTTP 
 
 **Hyper Text Transfer Protocol** - запросы (методы)
@@ -114,6 +124,7 @@ public class PersonController {
 ___
 <br>
 
+<a name="get"></a>
 ## Обработка параметров GET запроса 
 
 Пример: localhost:8080`?name=Elon&surname=Musk`
@@ -146,7 +157,7 @@ ___
 
 <br>
 
-
+<a name="model"></a>
 # Model
 + Хранит в себе данные
 + Взаимодействует с БД для получения данных
@@ -186,6 +197,7 @@ public String helloPage(@RequestParam(value = "name", required = false) String n
 ___
 <br>
 
+<a name="view"></a>
 # View
 + Получает данные от контроллера и отображает их в браузере
 + Для динамического отображения данных используются шаблонизаторы (**Thymeleaf**, Freemarker, Velocity)
