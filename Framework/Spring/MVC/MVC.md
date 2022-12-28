@@ -1,12 +1,18 @@
-# Spring MVC
+## Содержание
 
 + [DispatcherServlet](#ds)
 + [Controller](#controller)
 + [HTTP методы](#http)
 + [Обработка параметров GET запроса](#get)
++ + [PATCH, DELETE, PUT запросы](#pdp)
 + [Model](#model)
 + [View](#view)
++ + [HTML форма в Thymeleaf](#thymeleaf)
++ + [Валидация форм, @Valid](#valid)
+___
+<br>
 
+# Spring MVC
 Предполагает разработку web-приложений с использованием архитектуры **Model - View - Controller**.
 
 ## MVC | (Model - View - Controller)
@@ -98,9 +104,9 @@ public class PersonController {
 | --------------- | ------------------ | ------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | GET             | нет                | да                  | @GetMapping   | Самый используемый запрос. Получение данных с сервера (переход по адресу, ссылке, поисковой запрос и т.д.) <br><br> Параметры нужны для передачи информации от клиента серверу во время запроса. Передаются в самом URL после знака `?` в формате **ключ=значение**. Несколько параметров разделяются знаком `&`. <br><br> https://vk.com/audios202613076?q=joji&section=playlist <br> Параметры (?q=lilpeep&section=playlist) |
 | POST            | да                 | нет                 | @PostMapping  | Добавление (изменение) данных на сервер (отправка данных с веб-форм, создать учетную запись, твитнуть, загрузить фото, добавить запись в сообщество). Параметры закодированы в теле запроса. <br> Content-Type может быть разный (JSON, XML, и т.д.)|
-| PUT | да | да |
-| PATCH | да | да |
-| DELETE | нет | да |
+| PUT | да | да | @PutMapping | Создаёт новый ресурс или заменяет представление целевого ресурса, данными представленными в теле запроса |
+| PATCH | да | да | @DeleteMapping | Удаляет указанный ресурс |
+| DELETE | нет | да | @PatchMapping | Частично изменяет ресурс |
 
 > Идемпотентность - ничего не меняет на сервере
 
@@ -154,8 +160,23 @@ public String helloPage(@RequestParam("name") String name) {
 ```
 `@RequestParam(value = "name", required = false)` - в таком случае можно будет передавать пустые параметры с **null**
 ___
-
 <br>
+
+<a name="pdp"></a>
+## PATCH, DELETE, PUT запросы
+
+PATCH, DELETE, PUT запросы передаются с помощью POST запроса, но в скрытом поле **_method** указывается желаемый HTTP метод. `Thymeleaf` берет на себя.
+
+На стороне Spring приложения чтение скрытого поля **_method** реализуется через фильтр. 
+
+В **Spring MVC** фильтр подключается вручную, если использовать **Spring Boot**, то нужно добавить бин в класс аннотирующийся **@SpringBootApplication**:
+```Java
+@Bean
+HiddenHttpMethodFilter hiddenHttpMethodFilter(){
+      return new HiddenHttpMethodFilter();
+}
+```
+
 
 <a name="model"></a>
 # Model
@@ -193,6 +214,34 @@ public String helloPage(@RequestParam(value = "name", required = false) String n
 </html>
 ```
 
+<br>
+
+<a name="modelatr"></a>
+## @ModelAttribute
+
+Атрибут `@ModelAttribute` - аннотация, которая связывает параметр метода или возвращаемое значение метода с именованным атрибутом модели, а затем предоставляет его веб-представлению.
+
+может аннотировать:
++ метод
+```Java
+@ModelAttribute("headerMessage")    // любая модель из данного контроллера будет иметь значение с ключом headerMessage
+public String populateHeaderMessage(){
+      return "Welcome to website";
+}
+```
+В модель каждого метода текущего контроллера добавляет **ключ-значение**, которые нужны во всех моделях этого контроллера.
+
++ аргумент метода
+```Java
+@PostMapping
+public String create(@ModelAttribute("person") Person person) {
+      personDAO.save(person);
+      return "redirect:/people";
+}
+```
+В данном случает аннотация берет на себя: 1) создание нового объекта, 2) добавление значений в поля с помощью сеттеров, 3) добавление созданного объекта в модель 
+
+> Если POST запрос без полей Объекта, то в модель будет положен новый объект со значениями полей по умолчанию null, 0.
 
 ___
 <br>
@@ -204,3 +253,90 @@ ___
 ___
 <br>
 
+<a name="thymeleaf"></a>
+## HTML форма в Thymeleaf
+
+### Контроллер:
+```Java
+@GetMapping("/new")
+public String newPerson(Model model) {
+      model.addAttribute("person", new Person());
+      return "people/new";
+}
+```
+
+### Представление *new.html*
+```html
+<form th:method="POST" th:action="@{/people}" th:object="${person}">
+
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br>
+
+    <label for="email">Enter email: </label>
+    <input type="text" th:field="*{email}" id="email">
+    <br>
+
+    <input type="submit" value="Create"/>
+</form>
+```
+<a name="valid"></a>
+## Валидация форм, @Valid
+
+
+`Hibernate Validator` задает правила валидации с помощью аннотаций над полями класса. Определяет такие правила, как "поле не может быть null", "диапозон числа" и тд. 
+
+Подключаем зависимость
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+```
+
+### Пример
+
+```Java
+@NotEmpty(message = "Имя не должно быть пустым")
+@Size(min = 2, max = 30, message = "Имя должно быть от 2 до 30 символов")
+private String name;
+
+@Min(value = 0, message = "Возраст должен быть больше 0")
+private int age;
+
+@NotEmpty(message = "Email не должн быть пустым")
+@Email(message = "Email должен быть с @")
+private String email;
+```
+[Популярные аннотации](https://alexkosarev.name/2018/07/30/bean-validation-api/)
+
+### Controller
+
+Для того чтобы значения с формы валидировались необходимо поставить аннотацию `@Valid` на моделе. Если условия валидации нарушаются, то ошибка помещается в объект `BindingResult` (должен идти после валидированной модели)
+
+```Java
+@PostMapping()
+public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+      
+      if (bindingResult.hasErrors()) return "people/new";   // проверка на ошибку валидации
+
+      personDAO.save(person);
+      return "redirect:/people";
+}
+```
+
+### View
+```html
+<form th:method="POST" th:action="@{/people}" th:object="${person}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <!--  Скрытая запись, при ошибки -->
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br>
+
+    <!-- .... -->
+</form>
+```
+___
+
+[Вернуться назад](../../../README.md)

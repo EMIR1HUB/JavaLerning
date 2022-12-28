@@ -11,9 +11,13 @@
 + [Базовый обобщенный класс](Java/Class_OOP/НаследованиеGenerics.md)
 + [Ссылочные типы и копирование объектов](Java/Class_OOP/СсылочныеТипы&КопированиеОбъектов.md)
 
+<br>
+
 ## Обработка исключений
 + [Классы исключений](Java/Exception/ОператорThrows.md)
 + [Создание своих классов исключений](Java/Exception/СозданиевоихКлассовИсключений.md)
+
+<br>
 
 ## Коллекции
 + [Типы коллекций. Интерфейс Collection](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md)
@@ -41,6 +45,25 @@
 ___
 <br>
 
+## JDBC
+Связь с БД
++ [Паттерн DAO](Java/DataBase/Patern.md)
+
+JDBC API
++ [Создание соединения - HikariCP](Java/DataBase/JDBC_API.md#1)
++ [Statement](Java/DataBase/JDBC_API.md#2)
++ [PreparedStatement](Java/DataBase/JDBC_API.md#4)
++ [Выполнение SQL-выражений](Java/DataBase/JDBC_API.md#3)
+
+JdbcTemplate
++ [Подключение БД](Java/DataBase/JDBC_Template.md#1)
++ [Mapper](Java/DataBase/JDBC_Template.md#2)
++ [Выполнение операций](Java/DataBase/JDBC_Template.md#3)
+
+
+___
+<br>
+
 ## Spring Core
 IoC, DI, Beans, Configuration
 + [ApplicationContext](Framework/Spring/SpringCore/SpringCore.md#appcontext)
@@ -62,8 +85,18 @@ ___
 + [Controller](Framework/Spring/MVC/MVC.md#controller)
 + [HTTP методы](Framework/Spring/MVC/MVC.md#http)
 + [Обработка параметров GET запроса](Framework/Spring/MVC/MVC.md#get)
++ + [PATCH, DELETE, PUT запросы](Framework/Spring/MVC/MVC.md#pdp)
 + [Model](Framework/Spring/MVC/MVC.md#model)
 + [View](Framework/Spring/MVC/MVC.md#view)
++ + [HTML форма в Thymeleaf](Framework/Spring/MVC/MVC.md#thymeleaf)
++ + [Валидация форм, @Valid](Framework/Spring/MVC/MVC.md#valid)
+___
+<br>
+
+## REST 
++ [RESTful](Framework/Spring/MVC/REST.md#1)
++ [Коммуникаия между клиентом и сервером](Framework/Spring/MVC/REST.md#2)
++ [Примеры запросов](Framework/Spring/MVC/REST.md#3)
 ___
 <br>
 
