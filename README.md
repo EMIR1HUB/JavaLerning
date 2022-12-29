@@ -10,14 +10,13 @@
 + + [Множественные ограничения](Java/Class_OOP/ОграниченияGenerics.md#plural)
 + [Базовый обобщенный класс](Java/Class_OOP/НаследованиеGenerics.md)
 + [Ссылочные типы и копирование объектов](Java/Class_OOP/СсылочныеТипы&КопированиеОбъектов.md)
-
-<br>
+___
 
 ## Обработка исключений
 + [Классы исключений](Java/Exception/ОператорThrows.md)
 + [Создание своих классов исключений](Java/Exception/СозданиевоихКлассовИсключений.md)
 
-<br>
+___
 
 ## Коллекции
 + [Типы коллекций. Интерфейс Collection](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md)
@@ -43,24 +42,23 @@
 + [Comparable и Comparator](Java/Collection/ComparableComparator.md)
 + [Iterator](Java/Collection/Iterator.md)
 ___
-<br>
+
 
 ## JDBC
-Связь с БД
 + [Паттерн DAO](Java/DataBase/Patern.md)
-
-JDBC API
-+ [Создание соединения - HikariCP](Java/DataBase/JDBC_API.md#1)
-+ [Statement](Java/DataBase/JDBC_API.md#2)
-+ [PreparedStatement](Java/DataBase/JDBC_API.md#4)
-+ [Выполнение SQL-выражений](Java/DataBase/JDBC_API.md#3)
-
-JdbcTemplate
-+ [Подключение БД](Java/DataBase/JDBC_Template.md#1)
-+ [Mapper](Java/DataBase/JDBC_Template.md#2)
-+ [Выполнение операций](Java/DataBase/JDBC_Template.md#3)
-
-
++ JDBC API
++ + [Создание соединения - HikariCP](Java/DataBase/JDBC_API.md#1)
++ + [Statement](Java/DataBase/JDBC_API.md#2)
++ + [PreparedStatement](Java/DataBase/JDBC_API.md#4)
++ + [Выполнение SQL-выражений](Java/DataBase/JDBC_API.md#3)
++ JdbcTemplate
++ + [Подключение БД](Java/DataBase/JDBC_Template.md#1)
++ + [Mapper](Java/DataBase/JDBC_Template.md#2)
++ + [Выполнение операций](Java/DataBase/JDBC_Template.md#3)
++ + [BatchUpdate](Java/DataBase/ConfigFile.md#4)
++ [Конфигурация БД из внешнего файла](Java/DataBase/ConfigFile.md)
++ + [Использование аннотации @Value](Java/DataBase/ConfigFile.md#2)
++ + [Абстракция среды Spring](Java/DataBase/ConfigFile.md#3)
 ___
 <br>
 
@@ -78,7 +76,6 @@ IoC, DI, Beans, Configuration
 + Конфигурация Spring приложения. Аннотации + Java код
 + + [Java-код](Framework/Spring/SpringCore/Config_annotation+JavaCode.md)
 ___
-<br>
 
 ## Spring MVC
 + [DispatcherServlet](Framework/Spring/MVC/MVC.md#ds)
@@ -91,7 +88,6 @@ ___
 + + [HTML форма в Thymeleaf](Framework/Spring/MVC/MVC.md#thymeleaf)
 + + [Валидация форм, @Valid](Framework/Spring/MVC/MVC.md#valid)
 ___
-<br>
 
 ## REST 
 + [RESTful](Framework/Spring/MVC/REST.md#1)
