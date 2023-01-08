@@ -87,6 +87,7 @@ ___
 + [View](Framework/Spring/MVC/MVC.md#view)
 + + [HTML форма в Thymeleaf](Framework/Spring/MVC/MVC.md#thymeleaf)
 + + [Валидация форм, @Valid](Framework/Spring/MVC/MVC.md#valid)
++ [Spring Validator](Framework/Spring/MVC/MVC.md#springvalid)
 ___
 
 ## REST 

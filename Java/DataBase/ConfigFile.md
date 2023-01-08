@@ -107,20 +107,21 @@ public class BatchController {
 Создает 1000 людей и добавляет их через INSERT
 
 ```Java
-public void testMultipleUpdate() {      // запрос без использования BatchUpdate
+// запрос без использования BatchUpdate
+public void testMultipleUpdate() {
     List<Person> people = createOneThousandPeople();
     long before = System.currentTimeMillis();
 
     String SQL = "INSERT INTO person(name, age, email) VALUES (?, ?, ?);";
-    for (Person person : people) {
+    for (Person person : people)
         jdbcTemplate.update(SQL, person.getName(), person.getAge(), person.getEmail());
-    }
 
     long after = System.currentTimeMillis();
     System.out.println("Time: " + (after - before));    // примерно 24898 мил. сек.
 }
 
-public void testBatchUpdate() {     // запрос с использованием BatchUpdate
+// запрос с использованием BatchUpdate
+public void testBatchUpdate() {
     List<Person> people = createOneThousandPeople();
     long before = System.currentTimeMillis();
 

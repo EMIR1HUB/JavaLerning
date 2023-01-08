@@ -9,6 +9,7 @@
 + [View](#view)
 + + [HTML форма в Thymeleaf](#thymeleaf)
 + + [Валидация форм, @Valid](#valid)
++ [Spring Validator](#springvalid)
 ___
 <br>
 
@@ -213,7 +214,7 @@ public String helloPage(@RequestParam(value = "name", required = false) String n
 
 </html>
 ```
-
+> Второй параметр `@RequestParam`( **required =** ) необязательный он указывает на то, что значения должны быть обязательно не пустыми
 <br>
 
 <a name="modelatr"></a>
@@ -280,6 +281,8 @@ public String newPerson(Model model) {
     <input type="submit" value="Create"/>
 </form>
 ```
+<br>
+
 <a name="valid"></a>
 ## Валидация форм, @Valid
 
@@ -324,7 +327,7 @@ public String create(@ModelAttribute("person") @Valid Person person, BindingResu
       return "redirect:/people";
 }
 ```
-
+<a name="viewthymeleaf"></a>
 ### View
 ```html
 <form th:method="POST" th:action="@{/people}" th:object="${person}">
@@ -338,5 +341,90 @@ public String create(@ModelAttribute("person") @Valid Person person, BindingResu
 </form>
 ```
 ___
+<br>
+
+<a name="springvalid"></a>
+# Spring Validator
+
+Spring предлагает дизайн проверки (и привязки данных) с помощью интерфейса `Validator` для более сложных валидаций, который одновременно является базовым и в высшей степени пригодным для использования на каждом уровне приложения. При проверке объектов валидаторы могут сообщать `Errors` объекту об ошибки проверки.
+
+### Пример
+
+Обсепечим поведение проверки повторных **email** для `Person` класса, реализуя следующие два метода `org.springframework.validation.Validator` интерфейса:
+
++ `supports(Class)` - Может ли это `Validator` проверять экземпляры поставляемых Class?
++ `validate(Object, org.springframework.validation.Errors)`- проверяет данный объект и в случае ошибок проверки регистрирует те, которые связаны с данным `Errors` объектом
+
+### Validator
+
+```Java
+@Component
+public class PersonValidator implements Validator {
+    private final PersonDAO personDAO;
+
+    @Autowired
+    public PersonValidator(PersonDAO personDAO) { this.personDAO = personDAO; }
+
+    @Override
+    public boolean supports(Class<?> clazz) 
+        return Person.class.equals(clazz);
+
+    @Override
+    public void validate(Object obj, Errors errors) {
+        Person person = (Person) obj;
+
+        // see if there is a person with the same email
+        if(personDAO.show(person.getEmail()).isPresent())   // check for not null
+            errors.rejectValue("email", "", "This email is already taken");
+    }
+}
+```
+
+### DAO
+```Java
+@Component
+public class PersonDAO {
+//...
+      public Optional<Person> show(String email) {
+            String SQL = "SELECT * FROM person WHERE email = ?";
+            return jdbcTemplate.query(SQL, new Object[]{email}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+      }
+}
+```
+
+### Controller
+
+```Java
+@PostMapping()
+public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+      // в bindingResult складываются ошибки от @Valid и от объекта Errors в методе validate
+      personValidator.validate(person, bindingResult);
+
+      if (bindingResult.hasErrors()) return "people/new";
+      personDAO.save(person);
+      return "redirect:/people";
+}
+```
+> В bindingResult храняться все ошибки от простых и более сложных валидаций
+
+### View код [Thymeleaf](#viewthymeleaf)
+
+[Источник](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/validation.html)
+___
+<br>
+
+## Validator Pattern
+
+Еще одна возможность валидировать с использованием `jakarta.validation.constraints.Pattern`.
+
+Аннотация позволяет проверить, что страка соответствует определенному паттерну - задает его с помощью [регулярных выражений](https://rexegg.com/)
+
+```Java
+@Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}", message = "Структура формы должны быть: Country, City, Postal Code (6 digits)")
+    private String address;
+```
+___
+<br>
+
 
 [Вернуться назад](../../../README.md)
