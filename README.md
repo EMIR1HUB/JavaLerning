@@ -86,6 +86,7 @@ ___
 + [Model](Framework/Spring/MVC/MVC.md#model)
 + [View](Framework/Spring/MVC/MVC.md#view)
 + + [HTML форма в Thymeleaf](Framework/Spring/MVC/MVC.md#thymeleaf)
++ + [Выпадающий список](Framework/Spring/MVC/MVC.md#lable)
 + + [Валидация форм, @Valid](Framework/Spring/MVC/MVC.md#valid)
 + [Spring Validator](Framework/Spring/MVC/MVC.md#springvalid)
 ___

@@ -283,6 +283,47 @@ public String newPerson(Model model) {
 ```
 <br>
 
+<a name="lable"></a>
+## Выпадающий список
+### Пример
+### Контроллер
+
+```Java
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+      //.... PersonDAO
+
+    @GetMapping()
+    public String adminPage(Model model, @ModelAttribute("person") Person person){
+        model.addAttribute("people", personDAO.index());
+        return "adminPage";
+    }
+
+    @PatchMapping("/add")
+    public String makeAdmin(@ModelAttribute("person") Person person){
+        System.out.println(person.getId());
+        return "redirect:/people";
+    }
+}
+```
+
+### View
+
+```xml
+<form th:method="PATCH" th:action="@{/admin/add}">
+    <label for="person">Выберите человека: </label>
+    <select th:object="${person}" th:field="*{id}" id="person">
+        <option th:each="person : ${people}" th:value="${person.getId()}"
+                th:text="${person.getName()}"></option>
+    </select>
+
+    <input type="submit" value="Назначить админом"/>
+</form>
+```
+
+<br>
+
 <a name="valid"></a>
 ## Валидация форм, @Valid
 
