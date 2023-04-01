@@ -161,7 +161,7 @@ System.out.println(musicPlayer2.getVolume());   // 10
 
 Бин с областью действия `prototype`  будет возвращать другой экземпляр каждый раз, когда запрашивается из контейнера.
 ```xml
-scope="singleton"
+scope="prototype"
 ```
 
 ```Java
