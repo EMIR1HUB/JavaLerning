@@ -106,10 +106,10 @@ class Person{
     private String name;
     private int age;       // Добавлены поле для хранения возраста пользователя
     public Person(String n, int a){
-          
         name=n;
         age=a;
     }
+    
     String getName(){return name;}
     int getAge(){return age;}
 }
@@ -121,7 +121,6 @@ class Person{
 class PersonNameComparator implements Comparator<Person>{
   
     public int compare(Person a, Person b){
-
         return a.getName().compareTo(b.getName());
     }
 }
@@ -129,7 +128,6 @@ class PersonNameComparator implements Comparator<Person>{
 class PersonAgeComparator implements Comparator<Person>{
   
     public int compare(Person a, Person b){
-      
         if(a.getAge()> b.getAge())
             return 1;
         else if(a.getAge()< b.getAge())

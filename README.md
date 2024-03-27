@@ -19,28 +19,32 @@ ___
 ___
 
 ## Коллекции
-+ [Типы коллекций. Интерфейс Collection](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md)
-+ [ArrayList. Интерфейс List](Java/Collection/ArrayList_ИнтерфейсList.md#list)
-+ [ArrayDeque](Java/Collection/ArrayList_ИнтерфейсList.md#arrdeque)
-+ + [Queue](Java/Collection/ArrayList_ИнтерфейсList.md#queue)
-+ + [Deque](Java/Collection/ArrayList_ИнтерфейсList.md#deque)
-+ [LinkedList](Java/Collection/ArrayList_ИнтерфейсList.md#linkedlist)
++ [Коллекции. Интерфейс Collection](Java/Collection/ТипыКоллекций_ИнтерфейсCollection.md)
++ [List](Java/Collection/ArrayList_ИнтерфейсList.md#list)
+  + [ArrayList](Java/Collection/ArrayList_ИнтерфейсList.md#arraylist)
+  + [LinkedList](Java/Collection/ArrayList_ИнтерфейсList.md#linkedlist)
+  + [Vector](Java/Collection/ArrayList_ИнтерфейсList.md#vector)
+  + [Stack](Java/Collection/ArrayList_ИнтерфейсList.md#stack)
++ [Queue](Java/Collection/ArrayList_ИнтерфейсList.md#queue) | [Deque](Java/Collection/ArrayList_ИнтерфейсList.md#deque)
+  + [ArrayDeque](Java/Collection/ArrayList_ИнтерфейсList.md#arrdeque)
+  + [PriorityQueue](Java/Collection/ArrayList_ИнтерфейсList.md#priorityqueue)
 + [Set](Java/Collection/ArrayList_ИнтерфейсList.md#set)
-+ + [HashSet](Java/Collection/ArrayList_ИнтерфейсList.md#hashset)
-+ + [SortedSet](Java/Collection/ArrayList_ИнтерфейсList.md#sortedset)
-+ + [NavigableSet](Java/Collection/ArrayList_ИнтерфейсList.md#navset)
-+ + [LinkedHashSet](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashset)
+  + [HashSet](Java/Collection/ArrayList_ИнтерфейсList.md#hashset)
+  + [SortedSet](Java/Collection/ArrayList_ИнтерфейсList.md#sortedset)
+  + [NavigableSet](Java/Collection/ArrayList_ИнтерфейсList.md#navset)
+  + [LinkedHashSet](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashset)
 + [Map](Java/Collection/ArrayList_ИнтерфейсList.md#map)
-+ + [HashMap](Java/Collection/ArrayList_ИнтерфейсList.md#hashmap)
-+ + [LinkedHashMap](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashmap)
-+ + [SortedMap](Java/Collection/ArrayList_ИнтерфейсList.md#sortedmap)
-+ + [NavigableMap](Java/Collection/ArrayList_ИнтерфейсList.md#navigablemap)
-+ + [TreeMap](Java/Collection/ArrayList_ИнтерфейсList.md#treemap)
+  + [HashMap](Java/Collection/ArrayList_ИнтерфейсList.md#hashmap)
+  + [LinkedHashMap](Java/Collection/ArrayList_ИнтерфейсList.md#linkedhashmap)
+  + [SortedMap](Java/Collection/ArrayList_ИнтерфейсList.md#sortedmap)
+  + [NavigableMap](Java/Collection/ArrayList_ИнтерфейсList.md#navigablemap)
+  + [TreeMap](Java/Collection/ArrayList_ИнтерфейсList.md#treemap)
+  + [Hashtable](Java/Collection/ArrayList_ИнтерфейсList.md#hashtable)
 
 <br>
 
-+ [Comparable и Comparator](Java/Collection/ComparableComparator.md)
 + [Iterator](Java/Collection/Iterator.md)
++ [Comparable и Comparator](Java/Collection/ComparableComparator.md)
 ___
 
 
