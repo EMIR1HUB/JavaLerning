@@ -2,7 +2,7 @@
 программного обеспечения. Предполагается, что есть некоторый набор общих формализованных проблем,
 которые довольно часто встречаются, и паттерны предоставляют ряд принципов для решения этих проблем.
 
-### Типы паттернов:
+## Типы паттернов:
 
 + [Порождающие паттерны](#singleton) предоставляют механизмы инициализации, позволяя создавать объекты удобным
   способом
@@ -11,7 +11,14 @@
     + [Builder (Строитель)](#builder)
     + [Factory (Фабрика)](#factory)
     + [Abstract Factory (Абстрактная фабрика)](#abstractfactory)
-+ [Структурные паттерны](Structural.md) определяют отношения между классами и объектами, позволяя им работать совместно
++ [Структурные паттерны](#adapter) определяют отношения между классами и объектами, позволяя им работать совместно
+    + [Adapter (Адаптер)](#adapter)
+    + [Bridge (Мост)](#bridge)
+    + [Composite (Компоновщик)](#composite)
+    + [Proxy (Заместитель)](#proxy)
+    + [Flyweight (Легковес)](#flyweight)
+    + [Facade (Фасад)](#facade)
+    + [Decorator (Декоратор)](#decorator)
 + [Поведенческие паттерны](Behavioral.md) используются для того, чтобы упростить взаимодействие между сущностями
 
 ___
@@ -334,7 +341,582 @@ public class Main {
   }
 }
 ```
+
+____
 <br>
+
+
+<a name="adapter"></a>
+
+## Структурные паттерны
+
+## Adapter (Адаптер)
+
+Преобразует интерфейс одного класса в интерфейс другого, который ожидают клиенты. Адаптер дает возможность классам с
+несовместимыми интерфейсами работать вместе.
+
+```java
+// Интерфейс зарядного устройства с разъемом USB
+interface USBCharger {
+  void chargeWithUSB();
+}
+
+class USBChargerImpl implements USBCharger {
+  @Override
+  public void chargeWithUSB() {
+    System.out.println("Заряжаем устройство через USB");
+  }
+}
+
+// Интерфейс зарядного устройства с разъемом Lightning
+interface LightningCharger {
+  void chargeWithLightning();
+}
+
+class LightningChargerImpl implements LightningCharger {
+  @Override
+  public void chargeWithLightning() {
+    System.out.println("Заряжаем устройство через разъем Lightning");
+  }
+}
+
+// Адаптер, который преобразует интерфейс USBCharger в LightningCharger
+class USBToLightningAdapter implements LightningCharger {
+  private USBCharger usbCharger;
+
+  public USBToLightningAdapter(USBCharger usbCharger) {
+    this.usbCharger = usbCharger;
+  }
+
+  @Override
+  public void chargeWithLightning() { // Используем зарядное устройство с разъемом USB через адаптер
+    usbCharger.chargeWithUSB();
+  }
+}
+
+// Клиентский код
+public class Main {
+  public static void main(String[] args) {
+    // Создаем зарядное устройство с разъемом USB
+    USBCharger usbCharger = new USBChargerImpl();
+
+    // Создаем адаптер, преобразующий USB в Lightning
+    LightningCharger lightningAdapter = new USBToLightningAdapter(usbCharger);
+
+    // Заряжаем устройство через разъем Lightning
+    lightningAdapter.chargeWithLightning();
+  }
+}
+```
+
+В примере адаптер `USBToLightningAdapter` принимает объект типа `USBCharger` в качестве параметра конструктора и
+реализует интерфейс `LightningCharger`. При вызове метода `chargeWithLightning()` адаптер использует
+метод `chargeWithUSB()`
+объекта `USBCharger` для зарядки устройства через разъем `Lightning`. Таким образом, мы можем использовать зарядное
+устройство с разъемом **USB** для зарядки устройства через разъем **Lightning** с помощью адаптера.
+<br>
+
+<a name="bridge"></a>
+
+## Bridge (Мост)
+
+Используется для отделения абстракции от ее реализации, позволяя им изменяться независимо друг от друга.
+
+```java
+// Интерфейс для управления устройством
+interface Device {
+  void turnOn();
+
+  void turnOff();
+}
+
+// Реализация устройства для конкретной операционной системы Windows
+class WindowsDevice implements Device {
+  @Override
+  public void turnOn() {
+    System.out.println("Устройство включено на Windows");
+  }
+
+  @Override
+  public void turnOff() {
+    System.out.println("Устройство выключено на Windows");
+  }
+}
+
+// Реализация устройства для конкретной операционной системы MacOS
+class MacOSDevice implements Device {
+  @Override
+  public void turnOn() {
+    System.out.println("Устройство включено на MacOS");
+  }
+
+  @Override
+  public void turnOff() {
+    System.out.println("Устройство выключено на MacOS");
+  }
+}
+
+// Абстракция для управления устройством
+abstract class RemoteControl {
+  protected Device device;
+
+  public RemoteControl(Device device) {
+    this.device = device;
+  }
+
+  public abstract void turnOn();
+
+  public abstract void turnOff();
+}
+
+// Реализация пульта управления для конкретной операционной системы Windows
+class WindowsRemoteControl extends RemoteControl {
+  public WindowsRemoteControl(Device device) {
+    super(device);
+  }
+
+  @Override
+  public void turnOn() {
+    System.out.println("Пульт включен на Windows");
+    device.turnOn();
+  }
+
+  @Override
+  public void turnOff() {
+    System.out.println("Пульт выключен на Windows");
+    device.turnOff();
+  }
+}
+
+// Реализация пульта управления для конкретной операционной системы MacOS
+class MacOSRemoteControl extends RemoteControl {
+  public MacOSRemoteControl(Device device) {
+    super(device);
+  }
+
+  @Override
+  public void turnOn() {
+    System.out.println("Пульт включен на MacOS");
+    device.turnOn();
+  }
+
+  @Override
+  public void turnOff() {
+    System.out.println("Пульт выключен на MacOS");
+    device.turnOff();
+  }
+}
+
+// Клиентский код
+public class Main {
+  public static void main(String[] args) {
+    // Создаем устройства
+    Device windowsDevice = new WindowsDevice();
+    Device macOsDevice = new MacOSDevice();
+
+    // Создаем пульты управления для разных операционных систем
+    RemoteControl windowsRemoteControl = new WindowsRemoteControl(windowsDevice);
+    RemoteControl macOsRemoteControl = new MacOSRemoteControl(macOsDevice);
+
+    // Включаем и выключаем устройства с помощью различных пультов
+    windowsRemoteControl.turnOn();
+    windowsRemoteControl.turnOff();
+
+    macOsRemoteControl.turnOn();
+    macOsRemoteControl.turnOff();
+  }
+}
+```
+
+В этом примере абстракция представлена классом `RemoteControl`, который может быть реализован для разных операционных
+систем. Реализации класса `WindowsRemoteControl` и `MacOSRemoteControl` включают в себя объекты устройств
+`WindowsDevice` и `MacOSDevice` и делегируют им управление. Таким образом, абстракция и реализация разделены, что
+позволяет
+изменять их независимо друг от друга.
+<br>
+
+<a name="composite"></a>
+
+## Composite (Компоновщик)
+
+Группирует несколько объектов в древовидную структуру используя один класс. Позволяет работать с несколькими классами
+через один объект.
+
+```java
+// Интерфейс для элемента структуры (компонента)
+interface FileSystemComponent {
+  void showDetails();
+}
+
+// Реализация компонента для файла
+class File implements FileSystemComponent {
+  private String name;
+
+  public File(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public void showDetails() {
+    System.out.println("File: " + name);
+  }
+}
+
+// Реализация компонента для папки
+class Folder implements FileSystemComponent {
+  private String name;
+  private List<FileSystemComponent> children;
+
+  public Folder(String name) {
+    this.name = name;
+    this.children = new ArrayList<>();
+  }
+
+  public void addComponent(FileSystemComponent component) {
+    children.add(component);
+  }
+
+  @Override
+  public void showDetails() {
+    System.out.println("Folder: " + name);
+    for (FileSystemComponent component : children) {
+      component.showDetails();
+    }
+  }
+}
+
+// Клиентский код
+public class Main {
+  public static void main(String[] args) {
+    // Создаем файлы
+    File file1 = new File("file1.txt");
+    File file2 = new File("file2.txt");
+    File file3 = new File("file3.txt");
+
+    // Создаем папки и добавляем в них файлы
+    Folder rootFolder = new Folder("Root");
+    Folder folder1 = new Folder("Folder1");
+    Folder folder2 = new Folder("Folder2");
+
+    folder1.addComponent(file1);
+    folder1.addComponent(file2);
+    folder2.addComponent(file3);
+
+    rootFolder.addComponent(folder1);
+    rootFolder.addComponent(folder2);
+
+    // Показываем детали всех элементов структуры
+    rootFolder.showDetails();
+  }
+}
+```
+
+В этом примере `File` и `Folder` реализуют общий интерфейс `FileSystemComponent`. Папка может содержать в себе как
+файлы, так
+и другие папки. Метод `showDetails()` выводит информацию о текущем элементе (название файла или папки) и рекурсивно
+вызывает `showDetails()` для всех дочерних элементов, что позволяет обрабатывать структуру компонентов независимо от их
+типа.
+<br>
+
+<a name="proxy"></a>
+
+## Proxy (Заместитель)
+
+Представляет объекты, которые могут контролировать другие объекты перехватывая их вызовы. Используется для контроля
+доступа к объекту или его функциональности.
+
+```java
+// Общий интерфейс для изображения
+interface Image {
+  void display();
+}
+
+// Реальный объект, представляющий загрузку изображения из интернета
+class RealImage implements Image {
+  private String filename;
+
+  public RealImage(String filename) {
+    this.filename = filename;
+    loadFromDisk();
+  }
+
+  private void loadFromDisk() {    // Здесь происходит загрузка изображения
+    System.out.println("Loading image " + filename + " from disk");
+  }
+
+  @Override
+  public void display() { // Здесь происходит отображение изображения
+    System.out.println("Displaying image " + filename);
+  }
+}
+
+// Заместитель, контролирующий доступ к реальному объекту
+class ProxyImage implements Image {
+  private RealImage realImage;
+  private String filename;
+
+  public ProxyImage(String filename) {
+    this.filename = filename;
+  }
+
+  @Override
+  public void display() {
+    if (realImage == null) {
+      realImage = new RealImage(filename);
+    }
+    realImage.display();
+  }
+}
+
+// Клиентский код
+public class Main {
+  public static void main(String[] args) {
+    // Создаем объекты заместителя и реального объекта
+    Image image1 = new ProxyImage("image1.jpg");
+    Image image2 = new ProxyImage("image2.jpg");
+
+    // Загружаем и отображаем изображения (при первом вызове будет произведена загрузка)
+    image1.display();
+    image2.display();
+  }
+}
+```
+
+В примере `RealImage` представляет реальное изображение, которое загружается из интернета при создании объекта.
+`ProxyImage` - это заместитель, который контролирует доступ к реальному изображению. Если изображение еще не загружено,
+то
+заместитель создает объект `RealImage` и делегирует ему вызов метода `display()`. Таким образом, клиентский код может
+работать с объектом `ProxyImage`, не зная, что реальное изображение загружается только по мере необходимости.
+<br>
+
+<a name="flyweight"></a>
+
+## Flyweight (Легковес)
+
+Используется для эффективной поддержки множества мелких объектов, разделяя их состояние между собой и позволяя им
+совместно использовать общие данные.
+Вместо создания большого количества похожих объектов, объекты используются повторно. Экономит память.
+
+```java
+// Интерфейс легковеса для представления цвета
+interface Color {
+  void fill();
+}
+
+// Реализация для представления конкретного цвета
+class ConcreteColor implements Color {
+  private String name;
+
+  public ConcreteColor(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public void fill() {
+    System.out.println("Filling with color: " + name);
+  }
+}
+
+// Фабрика легковесов цветов
+class ColorFactory {
+  private static final Map<String, Color> colorMap = new HashMap<>();
+
+  public static Color getColor(String name) {
+    Color color = colorMap.get(name);
+    if (color == null) {
+      color = new ConcreteColor(name);
+      colorMap.put(name, color);
+    }
+    return color;
+  }
+}
+
+// Клиентский код
+public class Main {
+  public static void main(String[] args) {
+    // Получаем легковесы для различных цветов
+    Color red = ColorFactory.getColor("red");
+    Color blue = ColorFactory.getColor("blue");
+    Color green = ColorFactory.getColor("green");
+
+    // Используем легковесы для заполнения цветом
+    red.fill();
+    blue.fill();
+    green.fill();
+  }
+}
+```
+
+<br>
+
+<a name="facade"></a>
+
+## Facade (Фасад)
+
+Предоставляет унифицированный интерфейс для взаимодействия с комплексной подсистемой, делая её более простой в
+использовании.
+
+Скрывает сложную систему классов приводя все вызовы к одному объекту. Помещает вызов нескольких сложных объектов в один
+объект.
+
+```java
+interface Car {
+  void start();
+
+  void stop();
+}
+
+class Key implements Car {
+  public void start() {
+    System.out.println("Вставить ключи");
+  }
+
+  public void stop() {
+    System.out.println("Вытянуть ключи");
+  }
+}
+
+class Engine implements Car {
+  public void start() {
+    System.out.println("Запустить двигатель");
+  }
+
+  public void stop() {
+    System.out.println("Остановить двигатель");
+  }
+}
+
+// Фасад для взаимодействия с ключом и двигателем
+class Facade {
+  private Key key;
+  private Engine engine;
+
+  public Facade() {
+    key = new Key();
+    engine = new Engine();
+  }
+
+  public void startCar() {
+    key.start();
+    engine.start();
+  }
+
+  public void stoptCar() {
+    key.stop();
+    engine.stop();
+  }
+}
+
+public class FacadeTest {//тест
+
+  public static void main(String[] args) {
+    Facade facade = new Facade();
+    facade.startCar();
+    facade.stoptCar();
+  }
+}
+```
+
+В примере `Engine` и `Key` представляет комплексную подсистему, а `Facade` - фасад, который предоставляет простой
+интерфейс
+для взаимодействия с ключами и двигателем. Клиентский код использует фасад `Facade` для запуска и остановки автомобиля,
+скрывая детали внутренней реализации.
+<br>
+
+<a name="decorator"></a>
+
+## Decorator (Декоратор)
+
+Добавляет новое поведение или функциональность существующего объекта динамически без привязки его структуры.
+
+Когда необходимо добавить новую функциональность, создаем новую имплементацию, которая
+инкапсулирует в себе логику и проксирует вызовы далее по необходимости.
+
+Простым примером декоратора может служить кофейный автомат. Имеется базовый класс кофе и различные добавки к нему,
+такие как сахар, молоко и взбитые сливки. Каждая добавка представляет собой декоратор, который добавляет дополнительные
+функции к базовому классу кофе.
+
+```java
+// Интерфейс для кофе
+interface Coffee {
+  String getDescription();
+
+  double getCost();
+}
+
+// Базовый класс кофе
+class SimpleCoffee implements Coffee {
+  @Override
+  public String getDescription() {
+    return "Simple coffee";
+  }
+
+  @Override
+  public double getCost() {
+    return 1.0;
+  }
+}
+
+// Декоратор добавки сахара
+class SugarDecorator implements Coffee {
+  private Coffee coffee;
+
+  public SugarDecorator(Coffee coffee) {
+    this.coffee = coffee;
+  }
+
+  @Override
+  public String getDescription() {
+    return coffee.getDescription() + ", with sugar";
+  }
+
+  @Override
+  public double getCost() {
+    return coffee.getCost() + 0.5;
+  }
+}
+
+// Декоратор добавки молока
+class MilkDecorator implements Coffee {
+  private Coffee coffee;
+
+  public MilkDecorator(Coffee coffee) {
+    this.coffee = coffee;
+  }
+
+  @Override
+  public String getDescription() {
+    return coffee.getDescription() + ", with milk";
+  }
+
+  @Override
+  public double getCost() {
+    return coffee.getCost() + 0.7;
+  }
+}
+
+// Клиентский код
+public class Main {
+  public static void main(String[] args) {
+    // Создаем простой кофе
+    Coffee coffee = new SimpleCoffee();
+    System.out.println(coffee.getDescription() + ": $" + coffee.getCost());
+
+    // Добавляем сахар к кофе
+    coffee = new SugarDecorator(coffee);
+    System.out.println(coffee.getDescription() + ": $" + coffee.getCost());
+
+    // Добавляем молоко к кофе
+    coffee = new MilkDecorator(coffee);
+    System.out.println(coffee.getDescription() + ": $" + coffee.getCost());
+  }
+}
+```
+
+
+
+
+
 
 
 
