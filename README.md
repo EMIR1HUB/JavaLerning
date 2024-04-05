@@ -1,5 +1,5 @@
 ## [Паттерны Проектирования](Pattern/Pattern.md)
-+ ### [Принципы SOLID]()
++ ### [Принципы SOLID](Pattern/SOLID.md)
 
 ## Классы. ООП
 
